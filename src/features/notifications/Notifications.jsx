@@ -126,9 +126,9 @@ const Notifications = () => {
                         <button
                             type="button"
                             aria-label="Notification settings"
-                            className="rounded-full border border-slate-200 bg-white p-2 transition hover:bg-slate-50"
+                            className="cursor-pointer rounded-full border border-slate-200 bg-white p-2 transition hover:bg-slate-50"
                         >
-                            <FiBell className="text-lg text-slate-500" />
+                            <FiBell className="text-lg text-slate-500 " />
                         </button>
 
                         <div className="flex items-center gap-2.5">

@@ -1,9 +1,69 @@
+import { useEffect, useRef, useState } from "react";
 import { FiImage, FiX } from "react-icons/fi";
 
 const AddBuildingModal = ({ isOpen, onClose }) => {
+  const inputRef = useRef(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [form, setForm] = useState({
+    buildingName: "",
+    city: "",
+    address: "",
+  });
+
+  useEffect(() => {
+    return () => {
+      if (selectedImage) {
+        URL.revokeObjectURL(selectedImage.preview);
+      }
+    };
+  }, [selectedImage]);
+
   if (!isOpen) {
     return null;
   }
+
+  const handleImageChange = (event) => {
+    const file = event.target.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    setSelectedImage((current) => {
+      if (current) {
+        URL.revokeObjectURL(current.preview);
+      }
+
+      return {
+        file,
+        preview: URL.createObjectURL(file),
+      };
+    });
+  };
+
+  const handleChange = (key) => (event) => {
+    setForm((current) => ({
+      ...current,
+      [key]: event.target.value,
+    }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    console.log({
+      ...form,
+      image: selectedImage
+        ? {
+            name: selectedImage.file.name,
+            size: selectedImage.file.size,
+            type: selectedImage.file.type,
+          }
+        : null,
+    });
+
+    onClose();
+  };
 
   return (
     <div
@@ -30,18 +90,43 @@ const AddBuildingModal = ({ isOpen, onClose }) => {
           </button>
         </div>
 
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          <input
+            ref={inputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
+            className="hidden"
+          />
+
           <button
             type="button"
-            className="mx-auto flex h-32 w-44 flex-col items-center justify-center rounded-lg border border-dashed border-blue-300 bg-blue-50/40 text-blue-500 transition hover:bg-blue-50"
+            onClick={() => inputRef.current?.click()}
+            className="mx-auto flex h-32 w-44 overflow-hidden rounded-lg border border-dashed border-blue-300 bg-blue-50/40 text-blue-500 transition hover:bg-blue-50"
           >
-            <FiImage className="text-4xl" />
-            <span className="mt-2 text-center text-sm font-semibold leading-tight">
-              Upload Building
-              <br />
-              Photo
-            </span>
+            {selectedImage ? (
+              <img
+                src={selectedImage.preview}
+                alt="Selected building"
+                className="h-full w-full object-cover"
+              />
+            ) : (
+              <span className="flex h-full w-full flex-col items-center justify-center">
+                <FiImage className="text-4xl" />
+                <span className="mt-2 text-center text-sm font-semibold leading-tight">
+                  Upload Building
+                  <br />
+                  Photo
+                </span>
+              </span>
+            )}
           </button>
+
+          {selectedImage ? (
+            <p className="text-center text-xs font-medium text-slate-500">
+              {selectedImage.file.name}
+            </p>
+          ) : null}
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div>
@@ -50,6 +135,8 @@ const AddBuildingModal = ({ isOpen, onClose }) => {
               </label>
               <input
                 type="text"
+                value={form.buildingName}
+                onChange={handleChange("buildingName")}
                 placeholder="e.g., north"
                 className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
               />
@@ -59,6 +146,8 @@ const AddBuildingModal = ({ isOpen, onClose }) => {
               <label className="mb-1 block text-xs font-medium text-slate-500">City</label>
               <input
                 type="text"
+                value={form.city}
+                onChange={handleChange("city")}
                 placeholder="e.g., London"
                 className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
               />
@@ -71,6 +160,8 @@ const AddBuildingModal = ({ isOpen, onClose }) => {
             </label>
             <textarea
               rows={3}
+              value={form.address}
+              onChange={handleChange("address")}
               placeholder="e.g., London"
               className="w-full rounded-md border border-slate-200 px-3 py-2 text-sm text-slate-700 outline-none transition placeholder:text-slate-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
             />

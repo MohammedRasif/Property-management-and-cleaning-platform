@@ -8,6 +8,11 @@ import MainLayout from "../Layout/MainLayout";
 import Dashboard from "../features/dashboard/Dashboard";
 import Notifications from "../features/notifications/Notifications";
 import Buildings from "../features/buildings/Buildings";
+import BuildingFlatsList from "../features/buildings/BuildingFlatsList";
+import BuildingFlatDetails from "../features/buildings/BuildingFlatDetails";
+import BuildingFlatDetailsEdit from "../features/buildings/BuildingFlatDetailsEdit";
+import Maintenence from "../features/maintenance/Maintenence";
+import HouseMaintenenceDetails from "../features/maintenance/HouseMaintenenceDetails";
 
 
 const router = createBrowserRouter([
@@ -30,6 +35,26 @@ const router = createBrowserRouter([
             {
                 path: "buildings",
                 element: <Buildings />,
+            },
+            {
+                path: "buildings/:buildingId",
+                element: <BuildingFlatsList />,
+            },
+            {
+                path: "buildings/:buildingId/flats/:flatId",
+                element: <BuildingFlatDetails />,
+            },
+            {
+                path: "buildings/:buildingId/flats/:flatId/edit",
+                element: <BuildingFlatDetailsEdit />,
+            },
+            {
+                path: "maintenance",
+                element: <Maintenence />,
+            },
+            {
+                path: "maintenance/:buildingId",
+                element: <HouseMaintenenceDetails />,
             },
         ]
     },
