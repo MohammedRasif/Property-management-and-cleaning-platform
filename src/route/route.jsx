@@ -8,6 +8,8 @@ import MainLayout from "../Layout/MainLayout";
 import Dashboard from "../features/dashboard/Dashboard";
 import Notifications from "../features/notifications/Notifications";
 import Buildings from "../features/buildings/Buildings";
+import Profile_and_Setting from "../features/Profile_and_Setting/Profile_and_Setting";
+import Team_messaging from "../features/Team_messaging/Team_messaging";
 
 
 const router = createBrowserRouter([
@@ -31,6 +33,14 @@ const router = createBrowserRouter([
                 path: "buildings",
                 element: <Buildings />,
             },
+            {
+                path: "profile-settings",
+                element: <Profile_and_Setting />,
+            },
+            {
+                path: "/team-messaging",
+                element: <Team_messaging />,
+            }
         ]
     },
 
