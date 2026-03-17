@@ -36,7 +36,7 @@ const MaintenanceBuildingCard = ({ building, onViewDetails }) => (
     <button
       type="button"
       onClick={() => onViewDetails(building.id)}
-      className="flex w-full items-center justify-center gap-1 border-t border-slate-100 bg-slate-50 py-2.5 text-sm font-semibold text-blue-500 transition hover:bg-slate-100"
+      className="cursor-pointer flex w-full items-center justify-center gap-1 border-t border-slate-100 bg-slate-50 py-2.5 text-sm font-semibold text-blue-500 transition hover:bg-slate-100"
     >
       View Details
       <FiChevronRight className="text-xs" />

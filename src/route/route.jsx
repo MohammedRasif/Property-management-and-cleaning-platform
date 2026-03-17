@@ -13,6 +13,10 @@ import BuildingFlatDetails from "../features/buildings/BuildingFlatDetails";
 import BuildingFlatDetailsEdit from "../features/buildings/BuildingFlatDetailsEdit";
 import Maintenence from "../features/maintenance/Maintenence";
 import HouseMaintenenceDetails from "../features/maintenance/HouseMaintenenceDetails";
+import MiniAdmin from "../features/userManagement/MiniAdmin";
+import Cleaners from "../features/userManagement/Cleaners";
+import MaintenanceWorker from "../features/userManagement/MaintenanceWorker";
+import Schedule from "../features/schedule/Schedule";
 
 
 const router = createBrowserRouter([
@@ -55,6 +59,22 @@ const router = createBrowserRouter([
             {
                 path: "maintenance/:buildingId",
                 element: <HouseMaintenenceDetails />,
+            },
+            {
+                path: "schedule",
+                element: <Schedule />,
+            },
+            {
+                path: "user-management/mini-admin",
+                element: <MiniAdmin />,
+            },
+            {
+                path: "user-management/cleaners",
+                element: <Cleaners />,
+            },
+            {
+                path: "user-management/maintenance-worker",
+                element: <MaintenanceWorker />,
             },
         ]
     },
