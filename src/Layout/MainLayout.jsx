@@ -7,7 +7,7 @@ const MainLayout = () => {
   const [showSidebarOnMobile, setShowSidebarOnMobile] = useState(true);
 
   const handleSidebarNavigate = () => {
-    if (window.matchMedia("(max-width: 600px)").matches) {
+    if (window.matchMedia("(max-width: 779px)").matches) {
       setShowSidebarOnMobile(false);
     }
   };

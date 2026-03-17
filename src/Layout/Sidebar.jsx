@@ -10,8 +10,9 @@ import {
   FiTool,
   FiUser,
 } from "react-icons/fi";
+import { useEffect, useState } from "react";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
-import { NavLink } from "react-router";
+import { NavLink, useLocation } from "react-router";
 
 const navItems = [
   { label: "Dashboard", icon: FiGrid, to: "/dashboard" },
@@ -23,6 +24,14 @@ const navItems = [
     icon: FiUser,
     hasChevron: true,
     to: "/user-management",
+    children: [
+      { label: "Mini Admin", to: "/user-management/mini-admin" },
+      { label: "Cleaners", to: "/user-management/cleaners" },
+      {
+        label: "Maintenance Worker",
+        to: "/user-management/maintenance-worker",
+      },
+    ],
   },
   { label: "Weekly Wages", icon: FiDollarSign, to: "/weekly-wages" },
   { label: "Reports", icon: FiFileText, to: "/reports" },
@@ -30,6 +39,18 @@ const navItems = [
 ];
 
 const Sidebar = ({ onNavigate = () => {} }) => {
+const Sidebar = ({ onNavigate = () => { } }) => {
+  const location = useLocation();
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(
+    location.pathname.startsWith("/user-management")
+  );
+
+  useEffect(() => {
+    if (location.pathname.startsWith("/user-management")) {
+      setIsUserMenuOpen(true);
+    }
+  }, [location.pathname]);
+
   return (
     <aside className="h-screen w-full max-w-none border-r border-slate-200 bg-slate-50 px-5 py-8 sm:px-6 lg:max-w-75 lg:px-7">
       <div className="flex h-full flex-col">
@@ -42,6 +63,50 @@ const Sidebar = ({ onNavigate = () => {} }) => {
           <ul className="space-y-2">
             {navItems.map((item) => {
               const Icon = item.icon;
+              // ========================== Nested Menu Under User Management ========================== \\
+              if (item.children) {
+                return (
+                  <li key={item.label}>
+                    <button
+                      type="button"
+                      onClick={() => setIsUserMenuOpen((current) => !current)}
+                      className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-lg font-medium transition ${isUserMenuOpen
+                        ? "text-blue-500"
+                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-800"
+                        }`}
+                    >
+                      <Icon className="shrink-0 text-[21px]" />
+                      <span>{item.label}</span>
+                      <FiChevronDown
+                        className={`ml-auto text-[20px] transition ${isUserMenuOpen ? "rotate-180" : ""
+                          }`}
+                      />
+                    </button>
+
+                    {isUserMenuOpen ? (
+                      <ul className="mt-1 space-y-1 pl-10">
+                        {item.children.map((child) => (
+                          <li key={child.label}>
+                            <NavLink
+                              to={child.to}
+                              onClick={onNavigate}
+                              className={({ isActive }) =>
+                                `block w-full rounded-md px-2 py-1.5 text-left text-lg font-medium transition ${
+                                  isActive
+                                    ? "text-white bg-blue-500"
+                                    : "text-slate-600 hover:bg-slate-100 hover:text-slate-800"
+                                }`
+                              }
+                            >
+                              {child.label}
+                            </NavLink>
+                          </li>
+                        ))}
+                      </ul>
+                    ) : null}
+                  </li>
+                );
+              }
 
               return (
                 <li key={item.label}>
@@ -53,15 +118,15 @@ const Sidebar = ({ onNavigate = () => {} }) => {
                         isActive
                           ? "bg-blue-50 text-blue-600"
                           : "text-slate-600 hover:bg-slate-100 hover:text-slate-800"
+                      `flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-lg font-medium transition ${isActive
+                        ? "text-white bg-blue-500"
+                        : "text-slate-600 hover:bg-slate-100 hover:text-slate-800"
                       }`
                     }
                   >
                     <Icon className={`shrink-0 text-[21px]`} />
                     <span>{item.label}</span>
 
-                    {item.hasChevron ? (
-                      <FiChevronDown className="ml-auto text-[20px]" />
-                    ) : null}
                   </NavLink>
                 </li>
               );

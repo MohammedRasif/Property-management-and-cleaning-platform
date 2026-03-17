@@ -5,6 +5,7 @@ import {
     FiMapPin,
     FiTrash2,
 } from "react-icons/fi";
+import { useNavigate } from "react-router";
 
 const buildings = Array.from({ length: 9 }, (_, index) => ({
     id: index + 1,
@@ -17,6 +18,8 @@ const buildings = Array.from({ length: 9 }, (_, index) => ({
 }));
 
 const BuildingCard = ({ building }) => {
+    const navigate = useNavigate();
+
     return (
         <article className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
             <div className="mb-3 flex items-start gap-3">
@@ -63,6 +66,7 @@ const BuildingCard = ({ building }) => {
 
                 <button
                     type="button"
+                    onClick={() => navigate(`/buildings/${building.id}`)}
                     className="inline-flex items-center justify-center gap-1 rounded-lg bg-blue-500 px-3 py-2 text-sm font-medium text-white transition hover:bg-blue-600"
                 >
                     Open

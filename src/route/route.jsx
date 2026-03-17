@@ -10,6 +10,15 @@ import Notifications from "../features/notifications/Notifications";
 import Buildings from "../features/buildings/Buildings";
 import Profile_and_Setting from "../features/Profile_and_Setting/Profile_and_Setting";
 import Team_messaging from "../features/Team_messaging/Team_messaging";
+import BuildingFlatsList from "../features/buildings/BuildingFlatsList";
+import BuildingFlatDetails from "../features/buildings/BuildingFlatDetails";
+import BuildingFlatDetailsEdit from "../features/buildings/BuildingFlatDetailsEdit";
+import Maintenence from "../features/maintenance/Maintenence";
+import HouseMaintenenceDetails from "../features/maintenance/HouseMaintenenceDetails";
+import MiniAdmin from "../features/userManagement/MiniAdmin";
+import Cleaners from "../features/userManagement/Cleaners";
+import MaintenanceWorker from "../features/userManagement/MaintenanceWorker";
+import Schedule from "../features/schedule/Schedule";
 
 
 const router = createBrowserRouter([
@@ -41,6 +50,41 @@ const router = createBrowserRouter([
                 path: "/team-messaging",
                 element: <Team_messaging />,
             }
+                path: "buildings/:buildingId",
+                element: <BuildingFlatsList />,
+            },
+            {
+                path: "buildings/:buildingId/flats/:flatId",
+                element: <BuildingFlatDetails />,
+            },
+            {
+                path: "buildings/:buildingId/flats/:flatId/edit",
+                element: <BuildingFlatDetailsEdit />,
+            },
+            {
+                path: "maintenance",
+                element: <Maintenence />,
+            },
+            {
+                path: "maintenance/:buildingId",
+                element: <HouseMaintenenceDetails />,
+            },
+            {
+                path: "schedule",
+                element: <Schedule />,
+            },
+            {
+                path: "user-management/mini-admin",
+                element: <MiniAdmin />,
+            },
+            {
+                path: "user-management/cleaners",
+                element: <Cleaners />,
+            },
+            {
+                path: "user-management/maintenance-worker",
+                element: <MaintenanceWorker />,
+            },
         ]
     },
 
